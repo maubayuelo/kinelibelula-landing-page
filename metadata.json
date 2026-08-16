@@ -1,0 +1,8 @@
+{
+  "name": "Remix KinéLibelula - Massothérapie à Montréal",
+  "description": "Landing page haute conversion pour massothérapie et soins thérapeutiques par Jitany Jara à Montréal",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
