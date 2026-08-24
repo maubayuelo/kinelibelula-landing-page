@@ -1,13 +1,13 @@
 import React from 'react';
 import { Heart, Baby, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
-import { PREGNANCY_SECTION } from '../data/landingData';
-import pregnancyImg from '../assets/images/pregnancy_massage_nature_1785157465957.jpg';
+import type { LandingData } from '../adapters/normalizeLandingPage';
 
 interface PregnancyProps {
+  data: LandingData['pregnancy'];
   onOpenBookingWithService?: (serviceName: string) => void;
 }
 
-export const PregnancySection: React.FC<PregnancyProps> = ({ onOpenBookingWithService }) => {
+export const PregnancySection: React.FC<PregnancyProps> = ({ data, onOpenBookingWithService }) => {
   return (
     <section id="grossesse" className="py-16 md:py-24 bg-[#F9F8F6]">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,11 +30,11 @@ export const PregnancySection: React.FC<PregnancyProps> = ({ onOpenBookingWithSe
               </h2>
 
               <p className="text-sm sm:text-base text-[#5E645D] leading-relaxed">
-                {PREGNANCY_SECTION.description}
+                {data.description}
               </p>
 
               <ul className="space-y-3 pt-2">
-                {PREGNANCY_SECTION.bulletPoints.map((point, idx) => (
+                {data.bulletPoints.map((point, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-[#2D312E]">
                     <span className="p-1 rounded-full bg-[#C85A28]/10 text-[#C85A28] mt-0.5 shrink-0">
                       <Heart className="w-3.5 h-3.5 fill-[#C85A28]" />
@@ -50,7 +50,7 @@ export const PregnancySection: React.FC<PregnancyProps> = ({ onOpenBookingWithSe
                   className="px-8 py-3.5 bg-[#2D312E] text-[#F9F8F6] font-bold text-xs uppercase tracking-wider rounded-full hover:bg-[#C85A28] transition-all shadow-md inline-flex items-center gap-2 group"
                   id="pregnancy-cta-btn"
                 >
-                  <span>{PREGNANCY_SECTION.ctaText}</span>
+                  <span>{data.ctaText}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[#C85A28] group-hover:text-white" />
                 </button>
               </div>
@@ -60,8 +60,8 @@ export const PregnancySection: React.FC<PregnancyProps> = ({ onOpenBookingWithSe
             <div className="lg:col-span-5">
               <div className="relative rounded-3xl overflow-hidden shadow-xl border border-[#E5E1D8] aspect-square max-w-md mx-auto group">
                 <img
-                  src={pregnancyImg}
-                  alt="Massage prénatal et détente durant la grossesse à Montréal"
+                  src={data.image.url}
+                  alt={data.image.alt}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                   referrerPolicy="no-referrer"
                 />

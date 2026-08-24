@@ -1,12 +1,13 @@
 import React from 'react';
 import { ChevronUp, Phone, MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
-import { PRACTICAL_INFO } from '../data/landingData';
+import type { LandingData } from '../adapters/normalizeLandingPage';
 interface FooterProps {
+  data: LandingData['practicalInfo'];
   onOpenBooking: () => void;
   onOpenLegal: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenBooking, onOpenLegal }) => {
+export const Footer: React.FC<FooterProps> = ({ data, onOpenBooking, onOpenLegal }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -60,11 +61,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenBooking, onOpenLegal }) =>
             <div className="space-y-2.5 text-xs text-[#A6AEA4]">
               <p className="flex items-center gap-2.5">
                 <MapPin className="w-4 h-4 text-[#C85A28] shrink-0" />
-                <span>{PRACTICAL_INFO.addressLine1}, {PRACTICAL_INFO.addressLine2}</span>
+                <span>{data.addressLine1}, {data.addressLine2}</span>
               </p>
               <p className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#C85A28] shrink-0" />
-                <span>{PRACTICAL_INFO.phone}</span>
+                <span>{data.phone}</span>
               </p>
             </div>
 

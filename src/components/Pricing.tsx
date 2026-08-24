@@ -1,12 +1,13 @@
 import React from 'react';
 import { Check, Sparkles, ShieldCheck, ArrowRight } from 'lucide-react';
-import { PRICING_PLANS } from '../data/landingData';
+import type { LandingData } from '../adapters/normalizeLandingPage';
 
 interface PricingProps {
+  data: LandingData['pricingPlans'];
   onOpenBookingWithPlan?: (planId: string) => void;
 }
 
-export const Pricing: React.FC<PricingProps> = ({ onOpenBookingWithPlan }) => {
+export const Pricing: React.FC<PricingProps> = ({ data, onOpenBookingWithPlan }) => {
   return (
     <section id="tarifs" className="py-16 md:py-24 bg-[#F2F4F0] border-y border-[#E5E1D8]">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,7 +31,7 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenBookingWithPlan }) => {
 
         {/* 2 Pricing Cards matching reference image layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-10">
-          {PRICING_PLANS.map((plan) => (
+          {data.map((plan) => (
             <div
               key={plan.id}
               className={`relative bg-white rounded-2xl p-8 flex flex-col justify-between text-left transition-all duration-300 hover:shadow-2xl ${

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Award, Heart, Users, ShieldCheck, Star, Sparkles, ArrowRight, CheckCircle2, FileCheck, Building2 } from 'lucide-react';
-import { ABOUT_JITANY } from '../data/landingData';
-import therapistImg from '../assets/images/therapist_jitany_jara_1785157479499.jpg';
+import type { LandingData } from '../adapters/normalizeLandingPage';
 
 interface AboutJitanyProps {
+  data: LandingData['aboutJitany'];
   onOpenBooking: () => void;
 }
 
-export const AboutJitany: React.FC<AboutJitanyProps> = ({ onOpenBooking }) => {
+export const AboutJitany: React.FC<AboutJitanyProps> = ({ data, onOpenBooking }) => {
   return (
     <section id="a-propos" className="py-16 md:py-24 bg-[#F9F8F6]">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,8 +25,8 @@ export const AboutJitany: React.FC<AboutJitanyProps> = ({ onOpenBooking }) => {
               <div className="relative bg-white rounded-3xl overflow-hidden border border-[#E5E1D8] shadow-xl p-4">
                 <div className="aspect-[4/5] rounded-2xl overflow-hidden relative">
                   <img
-                    src={therapistImg}
-                    alt="Jitany Jara Massothérapeute à Montréal"
+                    src={data.image.url}
+                    alt={data.image.alt}
                     className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
                     referrerPolicy="no-referrer"
                   />
@@ -73,16 +73,16 @@ export const AboutJitany: React.FC<AboutJitanyProps> = ({ onOpenBooking }) => {
             {/* Paragraphs */}
             <div className="space-y-4 text-sm sm:text-base leading-relaxed">
               <p className="font-medium text-[#2D312E] text-base sm:text-lg">
-                {ABOUT_JITANY.p1}
+                {data.p1}
               </p>
               <p className="text-[#2D312E] font-medium">
-                {ABOUT_JITANY.p2}
+                {data.p2}
               </p>
               <p className="text-[#3E433F]">
-                {ABOUT_JITANY.pCoaching}
+                {data.pCoaching}
               </p>
               <p className="font-serif font-normal text-[#2D312E] border-l-2 border-[#C85A28] pl-4 py-2 bg-[#F2F4F0] rounded-r-xl not-italic">
-                "{ABOUT_JITANY.p3}"
+                "{data.p3}"
               </p>
             </div>
 
@@ -161,7 +161,7 @@ export const AboutJitany: React.FC<AboutJitanyProps> = ({ onOpenBooking }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {ABOUT_JITANY.certifications.map((cert) => (
+            {data.certifications.map((cert) => (
               <div 
                 key={cert.id} 
                 className="bg-white border border-[#E5E1D8] hover:border-[#C85A28]/40 rounded-2xl p-6 transition-all shadow-2xs hover:shadow-md flex flex-col justify-between group relative overflow-hidden"

@@ -1,8 +1,12 @@
 import React from 'react';
 import { Calendar, PhoneCall, Sparkles } from 'lucide-react';
-import { PROCESS_STEPS } from '../data/landingData';
+import type { LandingData } from '../adapters/normalizeLandingPage';
 
-export const Process: React.FC = () => {
+interface ProcessProps {
+  data: LandingData['processSteps'];
+}
+
+export const Process: React.FC<ProcessProps> = ({ data }) => {
   const getStepIcon = (step: string) => {
     switch (step) {
       case "1":
@@ -39,7 +43,7 @@ export const Process: React.FC = () => {
 
         {/* 3 Step Cards with Seamlessly Integrated Number & Icon */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {PROCESS_STEPS.map((step, idx) => (
+          {data.map((step, idx) => (
             <div
               key={idx}
               className="bg-white border border-[#E5E1D8] rounded-2xl p-8 text-left flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 hover:border-[#C85A28]/40 transition-all duration-300 relative group"

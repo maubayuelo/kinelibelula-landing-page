@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import { Phone, Menu, X, ShieldCheck, ArrowRight } from 'lucide-react';
-import { PRACTICAL_INFO } from '../data/landingData';
+import type { LandingData } from '../adapters/normalizeLandingPage';
+import type { SupportedLocale } from '../services/queries';
 
 interface HeaderProps {
+  data: LandingData['practicalInfo'];
+  locale: SupportedLocale;
+  onLocaleChange: (locale: SupportedLocale) => void;
   onOpenBooking: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState<'FR' | 'EN' | 'ES'>('FR');
+type DisplayLang = 'FR' | 'EN' | 'ES';
 
-  const languages: Array<{ code: 'FR' | 'EN' | 'ES'; label: string; flag: string }> = [
+const LOCALE_TO_DISPLAY: Record<SupportedLocale, DisplayLang> = { fr: 'FR', en: 'EN', es: 'ES' };
+const DISPLAY_TO_LOCALE: Record<DisplayLang, SupportedLocale> = { FR: 'fr', EN: 'en', ES: 'es' };
+
+export const Header: React.FC<HeaderProps> = ({ data, locale, onLocaleChange, onOpenBooking }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const currentLang = LOCALE_TO_DISPLAY[locale];
+
+  const languages: Array<{ code: DisplayLang; label: string; flag: string }> = [
     { code: 'FR', label: 'FR', flag: '🇫🇷' },
     { code: 'EN', label: 'EN', flag: '🇨🇦' },
     { code: 'ES', label: 'ES', flag: '🇲🇽' },
@@ -39,11 +48,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
             </span>
             <span>•</span>
             <a
-              href={`tel:${PRACTICAL_INFO.phone}`}
+              href={`tel:${data.phone}`}
               className="hover:text-white underline underline-offset-2 flex items-center gap-1 font-semibold"
             >
               <Phone className="w-3 h-3 text-[#C85A28]" />
-              {PRACTICAL_INFO.phone}
+              {data.phone}
             </a>
           </div>
         </div>
@@ -80,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
                 return (
                   <button
                     key={lang.code}
-                    onClick={() => setCurrentLang(lang.code)}
+                    onClick={() => onLocaleChange(DISPLAY_TO_LOCALE[lang.code])}
                     className={`px-2 py-1 rounded-full text-[11px] font-bold transition-all ${
                       isActive
                         ? 'bg-[#C85A28] text-white shadow-2xs'
@@ -97,12 +106,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
           </div>
 
           <a
-            href={`tel:${PRACTICAL_INFO.phone}`}
+            href={`tel:${data.phone}`}
             className="flex items-center gap-2 text-xs font-semibold text-[#2D312E] hover:text-[#C85A28] transition-all px-3.5 py-2 rounded-full border border-[#E5E1D8] bg-[#F2F4F0]/60 hover:bg-white whitespace-nowrap"
             id="header-phone-link"
           >
             <Phone className="w-3.5 h-3.5 text-[#C85A28]" />
-            <span>{PRACTICAL_INFO.phone}</span>
+            <span>{data.phone}</span>
           </a>
 
           <a
@@ -123,7 +132,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
               {languages.map((lang) => (
                 <button
                   key={lang.code}
-                  onClick={() => setCurrentLang(lang.code)}
+                  onClick={() => onLocaleChange(DISPLAY_TO_LOCALE[lang.code])}
                   className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full font-bold transition-all text-[10px] sm:text-[11px] ${
                     currentLang === lang.code
                       ? 'bg-[#C85A28] text-white shadow-2xs'
@@ -139,12 +148,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
 
           {/* Quick Call Button on Tablet */}
           <a
-            href={`tel:${PRACTICAL_INFO.phone}`}
+            href={`tel:${data.phone}`}
             className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#F2F4F0] hover:bg-white border border-[#E5E1D8] text-[#2D312E] text-xs font-semibold rounded-full transition-all whitespace-nowrap"
             title="Appeler le cabinet"
           >
             <Phone className="w-3.5 h-3.5 text-[#C85A28]" />
-            <span className="hidden md:inline">{PRACTICAL_INFO.phone}</span>
+            <span className="hidden md:inline">{data.phone}</span>
             <span className="md:hidden">Appeler</span>
           </a>
 
@@ -214,11 +223,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
           {/* Action CTAs inside Drawer */}
           <div className="pt-3 border-t border-[#E5E1D8] flex flex-col sm:flex-row gap-3">
             <a
-              href={`tel:${PRACTICAL_INFO.phone}`}
+              href={`tel:${data.phone}`}
               className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-[#F2F4F0] border border-[#E5E1D8] text-[#2D312E] font-semibold rounded-full text-xs uppercase tracking-wider hover:bg-white transition-all"
             >
               <Phone className="w-4 h-4 text-[#C85A28]" />
-              <span>Appeler le {PRACTICAL_INFO.phone}</span>
+              <span>Appeler le {data.phone}</span>
             </a>
             <a
               href="#contact"

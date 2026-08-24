@@ -1,12 +1,13 @@
 import React from 'react';
 import { Check, ArrowRight, Sparkles } from 'lucide-react';
-import { SERVICES_DATA } from '../data/landingData';
+import type { LandingData } from '../adapters/normalizeLandingPage';
 
 interface ServicesProps {
+  data: LandingData['services'];
   onOpenBooking: () => void;
 }
 
-export const Services: React.FC<ServicesProps> = ({ onOpenBooking }) => {
+export const Services: React.FC<ServicesProps> = ({ data, onOpenBooking }) => {
   return (
     <section id="services" className="py-16 md:py-24 bg-[#F2F4F0] border-y border-[#E5E1D8]">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,7 +30,7 @@ export const Services: React.FC<ServicesProps> = ({ onOpenBooking }) => {
 
         {/* 3 Service Cards matching reference image layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {SERVICES_DATA.map((service) => (
+          {data.map((service) => (
             <div
               key={service.id}
               className="bg-white border border-[#E5E1D8] rounded-2xl p-8 flex flex-col justify-between hover:shadow-xl transition-all duration-300 text-left group"

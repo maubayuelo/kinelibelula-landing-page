@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { ChevronDown, HelpCircle, Sparkles } from 'lucide-react';
-import { FAQ_DATA } from '../data/landingData';
+import type { LandingData } from '../adapters/normalizeLandingPage';
 
-export const FAQ: React.FC = () => {
+interface FAQProps {
+  data: LandingData['faq'];
+}
+
+export const FAQ: React.FC<FAQProps> = ({ data }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleAccordion = (index: number) => {
@@ -32,7 +36,7 @@ export const FAQ: React.FC = () => {
 
         {/* Accordion List */}
         <div className="max-w-3xl mx-auto space-y-4">
-          {FAQ_DATA.map((item, idx) => {
+          {data.map((item, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div

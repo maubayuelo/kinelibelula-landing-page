@@ -1,12 +1,13 @@
 import React from 'react';
 import { MapPin, Phone, Mail, Clock, Sparkles, Send } from 'lucide-react';
-import { PRACTICAL_INFO } from '../data/landingData';
+import type { LandingData } from '../adapters/normalizeLandingPage';
 
 interface PracticalInfoProps {
+  data: LandingData['practicalInfo'];
   onOpenBooking?: () => void;
 }
 
-export const PracticalInfo: React.FC<PracticalInfoProps> = ({ onOpenBooking }) => {
+export const PracticalInfo: React.FC<PracticalInfoProps> = ({ data, onOpenBooking }) => {
   return (
     <section id="contact" className="py-16 md:py-24 bg-[#F9F8F6]">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,8 +48,8 @@ export const PracticalInfo: React.FC<PracticalInfoProps> = ({ onOpenBooking }) =
               </div>
 
               <div className="text-sm text-[#3E433F] pt-4 border-t border-[#E5E1D8] space-y-1">
-                <p className="font-semibold text-[#2D312E] text-base">{PRACTICAL_INFO.addressLine1}</p>
-                <p className="text-sm font-medium text-[#2D312E]">{PRACTICAL_INFO.addressLine2}</p>
+                <p className="font-semibold text-[#2D312E] text-base">{data.addressLine1}</p>
+                <p className="text-sm font-medium text-[#2D312E]">{data.addressLine2}</p>
                 <p className="text-xs text-[#3E433F] pt-3 leading-relaxed">
                   Stationnement gratuit sur rue disponible à proximité et accès facile en transport en commun (Rosemont - La Petite-Patrie).
                 </p>
@@ -85,12 +86,12 @@ export const PracticalInfo: React.FC<PracticalInfoProps> = ({ onOpenBooking }) =
 
               <div className="space-y-3 pt-4 border-t border-[#E5E1D8]">
                 <a
-                  href={`tel:${PRACTICAL_INFO.phone}`}
+                  href={`tel:${data.phone}`}
                   className="w-full py-3.5 px-4 bg-[#C85A28] text-white font-bold text-xs uppercase tracking-wider rounded-full hover:bg-[#2D312E] transition-all flex items-center justify-center gap-2 shadow-sm"
                   id="practical-phone-btn"
                 >
                   <Phone className="w-4 h-4" />
-                  <span>Appeler : {PRACTICAL_INFO.phone}</span>
+                  <span>Appeler : {data.phone}</span>
                 </a>
 
                 {onOpenBooking && (

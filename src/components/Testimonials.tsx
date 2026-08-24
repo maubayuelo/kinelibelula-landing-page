@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Star, Quote, CheckCircle2, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
-import { TESTIMONIALS_DATA } from '../data/landingData';
+import type { LandingData } from '../adapters/normalizeLandingPage';
 
-export const Testimonials: React.FC = () => {
+interface TestimonialsProps {
+  data: LandingData['testimonials'];
+}
+
+export const Testimonials: React.FC<TestimonialsProps> = ({ data }) => {
   const [activeFilter, setActiveFilter] = useState<'all' | string>('all');
 
   return (
@@ -41,7 +45,7 @@ export const Testimonials: React.FC = () => {
 
         {/* Bento Grid Layout for Testimonial Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {TESTIMONIALS_DATA.map((item, index) => {
+          {data.map((item, index) => {
             let colSpan = 'lg:col-span-6';
             let isFeatured = false;
 

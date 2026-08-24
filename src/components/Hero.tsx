@@ -1,13 +1,13 @@
 import React from 'react';
 import { Star, ShieldCheck, ArrowRight, Sparkles, HeartHandshake } from 'lucide-react';
-import { HERO_DATA, PRACTICAL_INFO } from '../data/landingData';
-import heroImg from '../assets/images/hero_massage_spa_1785157453784.jpg';
+import type { LandingData } from '../adapters/normalizeLandingPage';
 
 interface HeroProps {
+  data: LandingData['hero'];
   onOpenBooking: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
+export const Hero: React.FC<HeroProps> = ({ data, onOpenBooking }) => {
   return (
     <section className="relative pt-10 pb-16 md:pt-16 md:pb-24 overflow-hidden bg-gradient-to-b from-[#FAF8F5] via-[#F4F1EA]/80 to-[#F9F8F6]">
       {/* Background ambient light gradient glows (matching FinalCTA style in light warm tones) */}
@@ -24,7 +24,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
             {/* Eyebrow Pill Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#F2F4F0] border border-[#E5E1D8] text-[#5A5A40] text-xs font-bold uppercase tracking-widest rounded-full shadow-2xs">
               <Sparkles className="w-3.5 h-3.5 text-[#C85A28]" />
-              <span>{HERO_DATA.eyebrow}</span>
+              <span>{data.eyebrow}</span>
             </div>
 
             {/* Display Headline */}
@@ -38,7 +38,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
 
             {/* Subtitle */}
             <p className="text-base sm:text-lg text-[#5E645D] max-w-2xl font-normal leading-relaxed">
-              {HERO_DATA.subtitle}
+              {data.subtitle}
             </p>
 
             {/* Main Action CTAs */}
@@ -48,7 +48,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                 className="px-7 py-3.5 cta-gradient-hover text-white font-bold text-xs uppercase tracking-wider rounded-full transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 text-center flex items-center justify-center gap-3 group"
                 id="hero-primary-cta-btn"
               >
-                <span>{HERO_DATA.ctaPrimary}</span>
+                <span>{data.ctaPrimary}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-white" />
               </button>
 
@@ -73,7 +73,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
 
             {/* Micro Trust Bullet List */}
             <div className="pt-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs sm:text-sm text-[#5E645D] border-t border-[#E5E1D8]">
-              {HERO_DATA.microTrust.map((item, idx) => (
+              {data.microTrust.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#C85A28]"></span>
                   <span>{item}</span>
@@ -104,8 +104,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
               
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#E5E1D8] bg-white aspect-[4/3] sm:aspect-[16/11]">
                 <img
-                  src={heroImg}
-                  alt="Soin de massothérapie relaxant à Montréal chez KinéLibelula"
+                  src={data.image.url}
+                  alt={data.image.alt}
                   className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                   referrerPolicy="no-referrer"
                 />
@@ -121,10 +121,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                 </div>
                 <div>
                   <div className="font-serif font-bold text-lg text-[#2D312E] leading-none">
-                    {HERO_DATA.experienceYears}
+                    {data.experienceYears}
                   </div>
                   <div className="text-xs text-[#5E645D] font-medium pt-1">
-                    {HERO_DATA.experienceLabel}
+                    {data.experienceLabel}
                   </div>
                 </div>
               </div>

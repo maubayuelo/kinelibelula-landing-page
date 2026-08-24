@@ -1,12 +1,13 @@
 import React from 'react';
 import { Moon, HeartPulse, Sparkles, ArrowRight } from 'lucide-react';
-import { BENEFITS_DATA } from '../data/landingData';
+import type { LandingData } from '../adapters/normalizeLandingPage';
 
 interface BenefitsProps {
+  data: LandingData['benefits'];
   onOpenBooking: () => void;
 }
 
-export const Benefits: React.FC<BenefitsProps> = ({ onOpenBooking }) => {
+export const Benefits: React.FC<BenefitsProps> = ({ data, onOpenBooking }) => {
   const getIcon = (name: string) => {
     switch (name) {
       case 'Moon':
@@ -42,7 +43,7 @@ export const Benefits: React.FC<BenefitsProps> = ({ onOpenBooking }) => {
 
         {/* 3 Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {BENEFITS_DATA.map((item, idx) => (
+          {data.map((item, idx) => (
             <div
               key={idx}
               className="bg-white border border-[#E5E1D8] p-8 rounded-2xl text-left transition-all hover:shadow-xl duration-300 flex flex-col justify-between group"
@@ -58,16 +59,6 @@ export const Benefits: React.FC<BenefitsProps> = ({ onOpenBooking }) => {
                 <p className="text-sm text-[#3E433F] leading-relaxed">
                   {item.description}
                 </p>
-              </div>
-
-              <div className="pt-8 border-t border-[#E5E1D8] mt-6">
-                <a
-                  href="#contact"
-                  className="w-full py-2.5 px-4 bg-[#F2F4F0] hover:bg-[#2D312E] hover:text-[#F9F8F6] text-[#2D312E] font-bold text-xs uppercase tracking-wider rounded-full border border-[#E5E1D8] transition-all flex items-center justify-center gap-2 group/btn"
-                >
-                  <span>Découvrir les soins</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform text-[#C85A28]" />
-                </a>
               </div>
             </div>
           ))}

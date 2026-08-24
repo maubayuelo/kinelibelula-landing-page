@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useLandingContent } from './hooks/useLandingContent';
+import type { SupportedLocale } from './services/queries';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Benefits } from './components/Benefits';
@@ -23,6 +25,8 @@ export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedPlanId, setSelectedPlanId] = useState('90-min');
   const [isLegalOpen, setIsLegalOpen] = useState(false);
+  const [locale, setLocale] = useState<SupportedLocale>('en');
+  const { data } = useLandingContent(locale);
 
   const handleOpenBooking = (planId = '90-min') => {
     setSelectedPlanId(planId);
@@ -44,18 +48,23 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#F9F8F6] text-[#2D312E] font-sans antialiased flex flex-col">
       {/* Header with Nav & Quick Call */}
-      <Header onOpenBooking={() => handleOpenBooking('90-min')} />
+      <Header
+        data={data.practicalInfo}
+        locale={locale}
+        onLocaleChange={setLocale}
+        onOpenBooking={() => handleOpenBooking('90-min')}
+      />
 
       {/* Main Landing Sections with smooth scroll animations */}
       <main className="flex-1">
         {/* 1. Hero Section */}
         <ScrollReveal duration={0.8} distance={20}>
-          <Hero onOpenBooking={() => handleOpenBooking('90-min')} />
+          <Hero data={data.hero} onOpenBooking={() => handleOpenBooking('90-min')} />
         </ScrollReveal>
 
         {/* 2. Les bienfaits */}
         <ScrollReveal duration={0.7}>
-          <Benefits onOpenBooking={() => handleOpenBooking('90-min')} />
+          <Benefits data={data.benefits} onOpenBooking={() => handleOpenBooking('90-min')} />
         </ScrollReveal>
 
         {/* 3. Je peux vous aider si... (Interactive need selector) */}
@@ -65,42 +74,42 @@ export default function App() {
 
         {/* 4. Mes services */}
         <ScrollReveal duration={0.7}>
-          <Services onOpenBooking={() => handleOpenBooking('90-min')} />
+          <Services data={data.services} onOpenBooking={() => handleOpenBooking('90-min')} />
         </ScrollReveal>
 
         {/* 5. Comment ça se passe ? (1-2-3 steps) */}
         <ScrollReveal duration={0.7}>
-          <Process />
+          <Process data={data.processSteps} />
         </ScrollReveal>
 
         {/* 6. Une approche humaine et bienveillante (About Jitany) */}
         <ScrollReveal duration={0.7}>
-          <AboutJitany onOpenBooking={() => handleOpenBooking('90-min')} />
+          <AboutJitany data={data.aboutJitany} onOpenBooking={() => handleOpenBooking('90-min')} />
         </ScrollReveal>
 
         {/* 7. Ce que disent mes clients (Testimonials with star ratings) */}
         <ScrollReveal duration={0.7}>
-          <Testimonials />
+          <Testimonials data={data.testimonials} />
         </ScrollReveal>
 
         {/* 8. Tarifs (60min / 90min with "Le plus choisi" badge) */}
         <ScrollReveal duration={0.7}>
-          <Pricing onOpenBookingWithPlan={(planId) => handleOpenBooking(planId)} />
+          <Pricing data={data.pricingPlans} onOpenBookingWithPlan={(planId) => handleOpenBooking(planId)} />
         </ScrollReveal>
 
         {/* 9. Massothérapie durant la grossesse */}
         <ScrollReveal duration={0.7}>
-          <PregnancySection onOpenBookingWithService={() => handleOpenBooking('60-min')} />
+          <PregnancySection data={data.pregnancy} onOpenBookingWithService={() => handleOpenBooking('60-min')} />
         </ScrollReveal>
 
         {/* 10. Questions fréquentes (FAQ) */}
         <ScrollReveal duration={0.7}>
-          <FAQ />
+          <FAQ data={data.faq} />
         </ScrollReveal>
 
         {/* 11. Informations pratiques (Address, Phone & Contact Form) */}
         <ScrollReveal duration={0.7}>
-          <PracticalInfo onOpenBooking={() => handleOpenBooking('90-min')} />
+          <PracticalInfo data={data.practicalInfo} onOpenBooking={() => handleOpenBooking('90-min')} />
         </ScrollReveal>
 
         {/* 12. Offrez à votre corps le soin qu'il mérite (Final CTA) */}
@@ -110,7 +119,8 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer 
+      <Footer
+        data={data.practicalInfo}
         onOpenBooking={() => handleOpenBooking('90-min')}
         onOpenLegal={handleOpenLegal}
       />
