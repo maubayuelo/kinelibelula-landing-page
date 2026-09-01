@@ -1,13 +1,16 @@
 import React from 'react';
 import { Check, ArrowRight, Sparkles } from 'lucide-react';
 import type { LandingData } from '../adapters/normalizeLandingPage';
+import { HighlightedTitle } from './HighlightedTitle';
 
 interface ServicesProps {
   data: LandingData['services'];
+  heading: LandingData['servicesHeading'];
+  global: LandingData['global'];
   onOpenBooking: () => void;
 }
 
-export const Services: React.FC<ServicesProps> = ({ data, onOpenBooking }) => {
+export const Services: React.FC<ServicesProps> = ({ data, heading, global, onOpenBooking }) => {
   return (
     <section id="services" className="py-16 md:py-24 bg-[#F2F4F0] border-y border-[#E5E1D8]">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,15 +19,15 @@ export const Services: React.FC<ServicesProps> = ({ data, onOpenBooking }) => {
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E1D8] text-[#5A5A40] text-xs font-bold uppercase tracking-widest rounded-full">
             <Sparkles className="w-3.5 h-3.5 text-[#C85A28]" />
-            <span>Expertise & Massothérapie</span>
+            <span>{heading.eyebrow}</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight">
-            Mes <span className="text-[#C85A28] italic font-serif">
-              services
-            </span>
-          </h2>
+          <HighlightedTitle
+            className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight"
+            title={heading.title}
+            highlight={heading.titleHighlight}
+          />
           <p className="text-sm sm:text-base text-[#3E433F]">
-            Des techniques thérapeutiques variées pour répondre à tous vos besoins
+            {heading.subtitle}
           </p>
         </div>
 
@@ -62,7 +65,7 @@ export const Services: React.FC<ServicesProps> = ({ data, onOpenBooking }) => {
                   href="#contact"
                   className="w-full py-3 px-4 bg-[#F2F4F0] hover:bg-[#2D312E] hover:text-[#F9F8F6] text-[#2D312E] font-bold text-xs uppercase tracking-wider rounded-full border border-[#E5E1D8] transition-all flex items-center justify-center gap-2 group/btn"
                 >
-                  <span>Choisir ce soin</span>
+                  <span>{service.ctaLabel}</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform text-[#C85A28]" />
                 </a>
               </div>
@@ -77,7 +80,7 @@ export const Services: React.FC<ServicesProps> = ({ data, onOpenBooking }) => {
             className="px-8 py-3.5 bg-[#C85A28] text-white font-bold text-xs uppercase tracking-wider rounded-full hover:bg-[#2D312E] transition-all shadow-md hover:shadow-lg inline-flex items-center gap-2 group"
             id="services-cta-btn"
           >
-            <span>Prendre rendez-vous</span>
+            <span>{global.ctaLabel}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>

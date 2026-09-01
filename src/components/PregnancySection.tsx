@@ -1,15 +1,16 @@
 import React from 'react';
 import { Heart, Baby, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
 import type { LandingData } from '../adapters/normalizeLandingPage';
+import { HighlightedTitle } from './HighlightedTitle';
 
 interface PregnancyProps {
   data: LandingData['pregnancy'];
-  onOpenBookingWithService?: (serviceName: string) => void;
+  onOpenBooking?: () => void;
 }
 
-export const PregnancySection: React.FC<PregnancyProps> = ({ data, onOpenBookingWithService }) => {
+export const PregnancySection: React.FC<PregnancyProps> = ({ data, onOpenBooking }) => {
   return (
-    <section id="grossesse" className="py-16 md:py-24 bg-[#F9F8F6]">
+    <section id="pregnancy" className="py-16 md:py-24 bg-[#F9F8F6]">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="bg-white border border-[#E5E1D8] rounded-3xl p-8 sm:p-12 shadow-xl overflow-hidden relative">
@@ -19,15 +20,14 @@ export const PregnancySection: React.FC<PregnancyProps> = ({ data, onOpenBooking
             <div className="lg:col-span-7 space-y-6 text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#F2F4F0] border border-[#E5E1D8] text-[#5A5A40] text-xs font-bold uppercase tracking-widest rounded-full">
                 <Baby className="w-4 h-4 text-[#C85A28]" />
-                <span>Soin Spécialisé Future Maman</span>
+                <span>{data.eyebrow}</span>
               </div>
 
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#2D312E] leading-tight">
-                Massothérapie durant la{' '}
-                <span className="text-[#C85A28] italic font-serif">
-                  grossesse
-                </span>
-              </h2>
+              <HighlightedTitle
+                className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#2D312E] leading-tight"
+                title={data.title}
+                highlight={data.titleHighlight}
+              />
 
               <p className="text-sm sm:text-base text-[#5E645D] leading-relaxed">
                 {data.description}
@@ -44,9 +44,13 @@ export const PregnancySection: React.FC<PregnancyProps> = ({ data, onOpenBooking
                 ))}
               </ul>
 
+              <p className="text-sm text-[#3E433F] leading-relaxed border-l-2 border-[#E5E1D8] pl-4">
+                {data.medicalNote}
+              </p>
+
               <div className="pt-4">
                 <button
-                  onClick={() => onOpenBookingWithService && onOpenBookingWithService('Massage Prénatal / Grossesse')}
+                  onClick={onOpenBooking}
                   className="px-8 py-3.5 bg-[#2D312E] text-[#F9F8F6] font-bold text-xs uppercase tracking-wider rounded-full hover:bg-[#C85A28] transition-all shadow-md inline-flex items-center gap-2 group"
                   id="pregnancy-cta-btn"
                 >
@@ -70,7 +74,7 @@ export const PregnancySection: React.FC<PregnancyProps> = ({ data, onOpenBooking
                 <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-[#E5E1D8] shadow-sm flex items-center gap-3">
                   <ShieldCheck className="w-5 h-5 text-[#C85A28] shrink-0" />
                   <div className="text-left text-xs text-[#2D312E] font-medium">
-                    Installations & coussins adaptés pour un confort total dès le 2e trimestre.
+                    {data.badgeNote}
                   </div>
                 </div>
               </div>

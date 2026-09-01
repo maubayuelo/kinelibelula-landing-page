@@ -1,15 +1,17 @@
 import React from 'react';
 import { Star, ShieldCheck, ArrowRight, Sparkles, HeartHandshake } from 'lucide-react';
 import type { LandingData } from '../adapters/normalizeLandingPage';
+import { HighlightedTitle } from './HighlightedTitle';
 
 interface HeroProps {
   data: LandingData['hero'];
+  global: LandingData['global'];
   onOpenBooking: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ data, onOpenBooking }) => {
+export const Hero: React.FC<HeroProps> = ({ data, global, onOpenBooking }) => {
   return (
-    <section className="relative pt-10 pb-16 md:pt-16 md:pb-24 overflow-hidden bg-gradient-to-b from-[#FAF8F5] via-[#F4F1EA]/80 to-[#F9F8F6]">
+    <section id="top" className="relative pt-10 pb-16 md:pt-16 md:pb-24 overflow-hidden bg-gradient-to-b from-[#FAF8F5] via-[#F4F1EA]/80 to-[#F9F8F6]">
       {/* Background ambient light gradient glows (matching FinalCTA style in light warm tones) */}
       <div className="absolute -top-28 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full bg-gradient-to-r from-[#C85A28]/12 via-[#D4A373]/15 to-[#5A5A40]/10 blur-3xl pointer-events-none"></div>
       <div className="absolute top-1/3 -right-24 w-[450px] h-[300px] rounded-full bg-[#C85A28]/8 blur-3xl pointer-events-none"></div>
@@ -28,13 +30,13 @@ export const Hero: React.FC<HeroProps> = ({ data, onOpenBooking }) => {
             </div>
 
             {/* Display Headline */}
-            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#2D312E] leading-[1.15] tracking-tight">
-              Libérez votre corps des{' '}
-              <span className="font-serif italic text-[#C85A28]">
-                tensions
-              </span>{' '}
-              et retrouvez votre énergie.
-            </h1>
+            <HighlightedTitle
+              as="h1"
+              className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#2D312E] leading-[1.15] tracking-tight"
+              highlightClassName="font-serif italic text-[#C85A28]"
+              title={data.title}
+              highlight={data.titleHighlight}
+            />
 
             {/* Subtitle */}
             <p className="text-base sm:text-lg text-[#5E645D] max-w-2xl font-normal leading-relaxed">
@@ -56,7 +58,7 @@ export const Hero: React.FC<HeroProps> = ({ data, onOpenBooking }) => {
                 href="#services"
                 className="px-6 py-3.5 bg-[#F2F4F0] border border-[#E5E1D8] text-[#2D312E] font-bold text-xs uppercase tracking-wider rounded-full hover:bg-white transition-all text-center"
               >
-                Découvrir les soins
+                {data.ctaSecondaryLabel}
               </a>
             </div>
 
@@ -64,10 +66,10 @@ export const Hero: React.FC<HeroProps> = ({ data, onOpenBooking }) => {
             <div className="space-y-1.5">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-[#E5E1D8] rounded-full text-xs text-[#2D312E] shadow-2xs">
                 <ShieldCheck className="w-4 h-4 text-[#C85A28] shrink-0" />
-                <span><strong>Reçus d'assurance</strong> massothérapie fournis</span>
+                <span>{data.insuranceLine}</span>
               </div>
               <p className="text-[11px] text-[#5E645D] pl-1">
-                Reçus valides selon votre couverture — vérifiez auprès de votre assureur.
+                {global.insuranceDisclaimer}
               </p>
             </div>
 

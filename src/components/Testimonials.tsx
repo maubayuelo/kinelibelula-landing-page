@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { Star, Quote, CheckCircle2, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import type { LandingData } from '../adapters/normalizeLandingPage';
+import { HighlightedTitle } from './HighlightedTitle';
 
 interface TestimonialsProps {
   data: LandingData['testimonials'];
+  heading: LandingData['testimonialsHeading'];
+  socialProof: LandingData['testimonialsSocialProof'];
+  disclaimer: LandingData['testimonialsDisclaimer'];
+  uiLabels: LandingData['uiLabels'];
 }
 
-export const Testimonials: React.FC<TestimonialsProps> = ({ data }) => {
+export const Testimonials: React.FC<TestimonialsProps> = ({ data, heading, socialProof, disclaimer, uiLabels }) => {
   const [activeFilter, setActiveFilter] = useState<'all' | string>('all');
 
   return (
@@ -18,16 +23,15 @@ export const Testimonials: React.FC<TestimonialsProps> = ({ data }) => {
           <div className="text-left max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F2F4F0] border border-[#E5E1D8] text-[#5A5A40] text-xs font-bold uppercase tracking-widest rounded-full">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#C85A28]" />
-              <span>Témoignages de nos clients</span>
+              <span>{heading.eyebrow}</span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight">
-              Ce que disent{' '}
-              <span className="text-[#C85A28] italic font-serif">
-                mes clients
-              </span>
-            </h2>
+            <HighlightedTitle
+              className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight"
+              title={heading.title}
+              highlight={heading.titleHighlight}
+            />
             <p className="text-sm sm:text-base text-[#3E433F]">
-              Leurs témoignages authentiques reflètent mon engagement pour votre soulagement
+              {heading.subtitle}
             </p>
           </div>
 
@@ -37,8 +41,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({ data }) => {
               <Sparkles className="w-4 h-4" />
             </div>
             <div className="text-xs text-[#3E433F] font-medium text-left">
-              <div className="font-bold text-[#2D312E]">Plus de 100 avis à Montréal</div>
-              <div>Cabinet KinéLibelula • Rosemont</div>
+              <div className="font-bold text-[#2D312E]">{socialProof}</div>
             </div>
           </div>
         </div>
@@ -79,7 +82,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({ data }) => {
                   <p className={`text-[#2D312E] leading-[1.6] not-italic font-serif font-normal ${
                     isFeatured ? 'text-base sm:text-lg' : 'text-xs sm:text-sm'
                   }`}>
-                    "{item.quote}"
+                    {uiLabels.quoteOpen}{item.quote}{uiLabels.quoteClose}
                   </p>
                 </div>
 
@@ -95,7 +98,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({ data }) => {
                         {item.name}
                       </div>
                       <div className="text-[11px] text-[#A6AEA4] font-medium">
-                        Client • Montréal
+                        {uiLabels.clientLabel} • {item.meta}
                       </div>
                     </div>
                   </div>
@@ -111,6 +114,10 @@ export const Testimonials: React.FC<TestimonialsProps> = ({ data }) => {
             );
           })}
         </div>
+
+        <p className="text-xs text-[#5E645D] text-center mt-8 w-full leading-relaxed">
+          {disclaimer}
+        </p>
 
       </div>
     </section>

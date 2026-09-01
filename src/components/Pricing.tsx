@@ -1,31 +1,35 @@
 import React from 'react';
 import { Check, Sparkles, ShieldCheck, ArrowRight } from 'lucide-react';
 import type { LandingData } from '../adapters/normalizeLandingPage';
+import { HighlightedTitle } from './HighlightedTitle';
 
 interface PricingProps {
   data: LandingData['pricingPlans'];
+  heading: LandingData['pricingHeading'];
+  global: LandingData['global'];
+  footerNote: LandingData['pricingFooterNote'];
+  paymentNote: LandingData['pricingPaymentNote'];
   onOpenBookingWithPlan?: (planId: string) => void;
 }
 
-export const Pricing: React.FC<PricingProps> = ({ data, onOpenBookingWithPlan }) => {
+export const Pricing: React.FC<PricingProps> = ({ data, heading, global, footerNote, paymentNote, onOpenBookingWithPlan }) => {
   return (
-    <section id="tarifs" className="py-16 md:py-24 bg-[#F2F4F0] border-y border-[#E5E1D8]">
+    <section id="pricing" className="py-16 md:py-24 bg-[#F2F4F0] border-y border-[#E5E1D8]">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E1D8] text-[#5A5A40] text-xs font-bold uppercase tracking-widest rounded-full">
             <Sparkles className="w-3.5 h-3.5 text-[#C85A28]" />
-            <span>Tarification transparente</span>
+            <span>{heading.eyebrow}</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight">
-            <span className="text-[#C85A28] italic font-serif">
-              Tarifs
-            </span>{' '}
-            & Formules de Soins
-          </h2>
+          <HighlightedTitle
+            className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight"
+            title={heading.title}
+            highlight={heading.titleHighlight}
+          />
           <p className="text-sm sm:text-base text-[#3E433F]">
-            Des soins personnalisés avec reçu d'assurance massothérapie inclus
+            {heading.subtitle}
           </p>
         </div>
 
@@ -93,7 +97,7 @@ export const Pricing: React.FC<PricingProps> = ({ data, onOpenBookingWithPlan })
                   }`}
                   id={`select-pricing-btn-${plan.id}`}
                 >
-                  <span>Choisir la formule {plan.duration}</span>
+                  <span>{plan.ctaLabel}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
@@ -105,7 +109,7 @@ export const Pricing: React.FC<PricingProps> = ({ data, onOpenBookingWithPlan })
         {/* Micro text & Main CTA */}
         <div className="text-center space-y-4">
           <p className="text-xs text-[#3E433F] font-medium italic">
-            Séances sur rendez-vous — contactez Jitany pour planifier votre moment de soin
+            {footerNote}
           </p>
 
           <div>
@@ -114,17 +118,17 @@ export const Pricing: React.FC<PricingProps> = ({ data, onOpenBookingWithPlan })
               className="px-8 py-3.5 cta-gradient-hover text-white font-bold text-xs uppercase tracking-wider rounded-full transition-all shadow-md hover:shadow-lg inline-flex items-center gap-2 group"
               id="pricing-main-cta-btn"
             >
-              <span>Prendre rendez-vous</span>
+              <span>{global.ctaLabel}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
 
           <div className="space-y-1">
             <p className="text-[11px] text-[#A6AEA4] uppercase tracking-wider font-semibold">
-              Reçus d'assurance remis immédiatement • Paiement sur place
+              {paymentNote}
             </p>
             <p className="text-[11px] text-[#5A5A40]">
-              Reçus valides selon votre couverture — vérifiez auprès de votre assureur.
+              {global.insuranceDisclaimer}
             </p>
           </div>
         </div>

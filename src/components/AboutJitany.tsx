@@ -1,15 +1,18 @@
 import React from 'react';
 import { Award, Heart, Users, ShieldCheck, Star, Sparkles, ArrowRight, CheckCircle2, FileCheck, Building2 } from 'lucide-react';
 import type { LandingData } from '../adapters/normalizeLandingPage';
+import { HighlightedTitle } from './HighlightedTitle';
 
 interface AboutJitanyProps {
   data: LandingData['aboutJitany'];
+  global: LandingData['global'];
+  uiLabels: LandingData['uiLabels'];
   onOpenBooking: () => void;
 }
 
-export const AboutJitany: React.FC<AboutJitanyProps> = ({ data, onOpenBooking }) => {
+export const AboutJitany: React.FC<AboutJitanyProps> = ({ data, global, uiLabels, onOpenBooking }) => {
   return (
-    <section id="a-propos" className="py-16 md:py-24 bg-[#F9F8F6]">
+    <section id="about" className="py-16 md:py-24 bg-[#F9F8F6]">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -41,10 +44,10 @@ export const AboutJitany: React.FC<AboutJitanyProps> = ({ data, onOpenBooking })
                 {/* Micro Quote Banner under photo */}
                 <div className="p-4 pt-5 text-left space-y-1">
                   <div className="font-serif italic text-sm text-[#2D312E]">
-                    "Chaque corps a une histoire, chaque soin est personnalisé."
+                    {uiLabels.quoteOpen}{data.imageCaption}{uiLabels.quoteClose}
                   </div>
                   <div className="text-xs text-[#5E645D] font-medium">
-                    — Jitany Jara, Massothérapeute agréée
+                    — {data.imageCaptionAttribution}
                   </div>
                 </div>
               </div>
@@ -58,17 +61,15 @@ export const AboutJitany: React.FC<AboutJitanyProps> = ({ data, onOpenBooking })
             {/* Category Tag */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#F2F4F0] border border-[#E5E1D8] text-[#5A5A40] text-xs font-bold uppercase tracking-widest rounded-full">
               <Sparkles className="w-3.5 h-3.5 text-[#C85A28]" />
-              <span>À propos de votre thérapeute</span>
+              <span>{data.eyebrow}</span>
             </div>
 
             {/* Main Heading */}
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#2D312E] leading-tight">
-              Une approche{' '}
-              <span className="text-[#C85A28] italic font-serif">
-                humaine
-              </span>{' '}
-              et bienveillante.
-            </h2>
+            <HighlightedTitle
+              className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#2D312E] leading-tight"
+              title={data.title}
+              highlight={data.titleHighlight}
+            />
 
             {/* Paragraphs */}
             <div className="space-y-4 text-sm sm:text-base leading-relaxed">
@@ -82,51 +83,30 @@ export const AboutJitany: React.FC<AboutJitanyProps> = ({ data, onOpenBooking })
                 {data.pCoaching}
               </p>
               <p className="font-serif font-normal text-[#2D312E] border-l-2 border-[#C85A28] pl-4 py-2 bg-[#F2F4F0] rounded-r-xl not-italic">
-                "{data.p3}"
+                {uiLabels.quoteOpen}{data.p3}{uiLabels.quoteClose}
               </p>
             </div>
 
-            {/* 2x2 Highlights Grid */}
+            {/* Highlights Grid — driven by data.badges; a badge with no real
+                text (blank, or a raw "[PENDIENTE...]" placeholder the WP
+                field hasn't been filled in for yet) is skipped rather than
+                printed literally. */}
             <div className="grid grid-cols-2 gap-3 pt-3">
-              <div className="p-3.5 bg-white border border-[#E5E1D8] rounded-xl flex items-center gap-3 shadow-2xs">
-                <div className="w-9 h-9 rounded-full bg-[#C85A28]/10 text-[#C85A28] flex items-center justify-center shrink-0">
-                  <Award className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="font-serif font-bold text-sm text-[#2D312E]">25+ ans</div>
-                  <div className="text-[11px] text-[#3E433F]">d'expérience</div>
-                </div>
-              </div>
-
-              <div className="p-3.5 bg-white border border-[#E5E1D8] rounded-xl flex items-center gap-3 shadow-2xs">
-                <div className="w-9 h-9 rounded-full bg-[#C85A28]/10 text-[#C85A28] flex items-center justify-center shrink-0">
-                  <Heart className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="font-serif font-bold text-sm text-[#2D312E]">100% Sur-mesure</div>
-                  <div className="text-[11px] text-[#3E433F]">soins adaptés</div>
-                </div>
-              </div>
-
-              <div className="p-3.5 bg-white border border-[#E5E1D8] rounded-xl flex items-center gap-3 shadow-2xs">
-                <div className="w-9 h-9 rounded-full bg-[#C85A28]/10 text-[#C85A28] flex items-center justify-center shrink-0">
-                  <Users className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="font-serif font-bold text-sm text-[#2D312E]">+100 Clients</div>
-                  <div className="text-[11px] text-[#3E433F]">satisfaits</div>
-                </div>
-              </div>
-
-              <div className="p-3.5 bg-white border border-[#E5E1D8] rounded-xl flex items-center gap-3 shadow-2xs">
-                <div className="w-9 h-9 rounded-full bg-[#C85A28]/10 text-[#C85A28] flex items-center justify-center shrink-0">
-                  <ShieldCheck className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="font-serif font-bold text-sm text-[#2D312E]">Reçus d'assurance</div>
-                  <div className="text-[11px] text-[#3E433F]">massothérapie</div>
-                </div>
-              </div>
+              {data.badges
+                .filter((badge) => badge.text.trim() !== '' && !/^\[.*\]$/.test(badge.text.trim()))
+                .map((badge, idx) => (
+                  <div key={idx} className="p-3.5 bg-white border border-[#E5E1D8] rounded-xl flex items-center gap-3 shadow-2xs">
+                    <div className="w-9 h-9 rounded-full bg-[#C85A28]/10 text-[#C85A28] flex items-center justify-center shrink-0">
+                      {badge.icon === 'Heart' && <Heart className="w-4 h-4" />}
+                      {badge.icon === 'Users' && <Users className="w-4 h-4" />}
+                      {badge.icon === 'ShieldCheck' && <ShieldCheck className="w-4 h-4" />}
+                      {badge.icon === 'Award' && <Award className="w-4 h-4" />}
+                    </div>
+                    <div>
+                      <div className="font-serif font-bold text-sm text-[#2D312E]">{badge.text}</div>
+                    </div>
+                  </div>
+                ))}
             </div>
 
             {/* CTA Button */}
@@ -136,7 +116,7 @@ export const AboutJitany: React.FC<AboutJitanyProps> = ({ data, onOpenBooking })
                 className="px-8 py-3.5 cta-gradient-hover text-white font-bold text-xs uppercase tracking-wider rounded-full transition-all shadow-md inline-flex items-center gap-3 group"
                 id="about-cta-btn"
               >
-                <span>Prendre rendez-vous</span>
+                <span>{global.ctaLabel}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
@@ -150,13 +130,13 @@ export const AboutJitany: React.FC<AboutJitanyProps> = ({ data, onOpenBooking })
           <div className="text-center max-w-2xl mx-auto mb-8 space-y-2">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#5A5A40]">
               <Building2 className="w-4 h-4 text-[#C85A28]" />
-              <span>Accréditations & Ordres Professionnels</span>
+              <span>{data.certEyebrow}</span>
             </div>
             <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#2D312E]">
-              Certifications & Associations Professionnelles
+              {data.certTitle}
             </h3>
             <p className="text-xs sm:text-sm text-[#3E433F]">
-              Thérapeute agréée auprès des associations reconnues pour l'émission de reçus d'assurances.
+              {data.certSubtitle}
             </p>
           </div>
 
@@ -190,7 +170,7 @@ export const AboutJitany: React.FC<AboutJitanyProps> = ({ data, onOpenBooking })
 
                 <div className="relative z-10 pt-4 mt-4 border-t border-[#F2F4F0] flex items-center gap-2 text-[11px] font-semibold text-[#5A5A40]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#C85A28]" />
-                  <span>Reçu officiel d'assurance fourni</span>
+                  <span>{cert.footnote}</span>
                 </div>
               </div>
             ))}
@@ -199,10 +179,10 @@ export const AboutJitany: React.FC<AboutJitanyProps> = ({ data, onOpenBooking })
           {/* Short note below certifications */}
           <div className="text-center mt-6 space-y-1">
             <p className="text-xs text-[#5E645D]">
-              Membre des associations professionnelles reconnues au Québec.
+              {data.certFootnote}
             </p>
             <p className="text-[11px] text-[#5A5A40]">
-              Reçus valides selon votre couverture — vérifiez auprès de votre assureur.
+              {global.insuranceDisclaimer}
             </p>
           </div>
         </div>

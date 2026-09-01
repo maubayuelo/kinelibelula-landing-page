@@ -12,7 +12,7 @@ import { Testimonials } from './components/Testimonials';
 import { Pricing } from './components/Pricing';
 import { PregnancySection } from './components/PregnancySection';
 import { FAQ } from './components/FAQ';
-import { PracticalInfo } from './components/PracticalInfo';
+import { Contact } from './components/Contact';
 import { FinalCTA } from './components/FinalCTA';
 import { Footer } from './components/Footer';
 import { BookingModal } from './components/BookingModal';
@@ -50,6 +50,8 @@ export default function App() {
       {/* Header with Nav & Quick Call */}
       <Header
         data={data.practicalInfo}
+        global={data.global}
+        header={data.header}
         locale={locale}
         onLocaleChange={setLocale}
         onOpenBooking={() => handleOpenBooking('90-min')}
@@ -59,74 +61,103 @@ export default function App() {
       <main className="flex-1">
         {/* 1. Hero Section */}
         <ScrollReveal duration={0.8} distance={20}>
-          <Hero data={data.hero} onOpenBooking={() => handleOpenBooking('90-min')} />
+          <Hero data={data.hero} global={data.global} onOpenBooking={() => handleOpenBooking('90-min')} />
         </ScrollReveal>
 
         {/* 2. Les bienfaits */}
         <ScrollReveal duration={0.7}>
-          <Benefits data={data.benefits} onOpenBooking={() => handleOpenBooking('90-min')} />
+          <Benefits data={data.benefits} heading={data.benefitsHeading} global={data.global} onOpenBooking={() => handleOpenBooking('90-min')} />
         </ScrollReveal>
 
         {/* 3. Je peux vous aider si... (Interactive need selector) */}
         <ScrollReveal duration={0.7}>
-          <NeedsSelector onOpenBookingWithService={() => handleOpenBooking('90-min')} />
+          <NeedsSelector
+            data={data.needCategories}
+            heading={data.needsHeading}
+            ctaLabel={data.needsCtaLabel}
+            onOpenBookingWithService={() => handleOpenBooking('90-min')}
+          />
         </ScrollReveal>
 
         {/* 4. Mes services */}
         <ScrollReveal duration={0.7}>
-          <Services data={data.services} onOpenBooking={() => handleOpenBooking('90-min')} />
+          <Services data={data.services} heading={data.servicesHeading} global={data.global} onOpenBooking={() => handleOpenBooking('90-min')} />
         </ScrollReveal>
 
         {/* 5. Comment ça se passe ? (1-2-3 steps) */}
         <ScrollReveal duration={0.7}>
-          <Process data={data.processSteps} />
+          <Process data={data.processSteps} heading={data.processHeading} stepLabel={data.uiLabels.stepLabel} />
         </ScrollReveal>
 
         {/* 6. Une approche humaine et bienveillante (About Jitany) */}
         <ScrollReveal duration={0.7}>
-          <AboutJitany data={data.aboutJitany} onOpenBooking={() => handleOpenBooking('90-min')} />
+          <AboutJitany data={data.aboutJitany} global={data.global} uiLabels={data.uiLabels} onOpenBooking={() => handleOpenBooking('90-min')} />
         </ScrollReveal>
 
         {/* 7. Ce que disent mes clients (Testimonials with star ratings) */}
         <ScrollReveal duration={0.7}>
-          <Testimonials data={data.testimonials} />
+          <Testimonials
+            data={data.testimonials}
+            heading={data.testimonialsHeading}
+            socialProof={data.testimonialsSocialProof}
+            disclaimer={data.testimonialsDisclaimer}
+            uiLabels={data.uiLabels}
+          />
         </ScrollReveal>
 
         {/* 8. Tarifs (60min / 90min with "Le plus choisi" badge) */}
         <ScrollReveal duration={0.7}>
-          <Pricing data={data.pricingPlans} onOpenBookingWithPlan={(planId) => handleOpenBooking(planId)} />
+          <Pricing
+            data={data.pricingPlans}
+            heading={data.pricingHeading}
+            global={data.global}
+            footerNote={data.pricingFooterNote}
+            paymentNote={data.pricingPaymentNote}
+            onOpenBookingWithPlan={(planId) => handleOpenBooking(planId)}
+          />
         </ScrollReveal>
 
         {/* 9. Massothérapie durant la grossesse */}
         <ScrollReveal duration={0.7}>
-          <PregnancySection data={data.pregnancy} onOpenBookingWithService={() => handleOpenBooking('60-min')} />
+          <PregnancySection data={data.pregnancy} onOpenBooking={() => handleOpenBooking('60-min')} />
         </ScrollReveal>
 
         {/* 10. Questions fréquentes (FAQ) */}
         <ScrollReveal duration={0.7}>
-          <FAQ data={data.faq} />
+          <FAQ data={data.faq} heading={data.faqHeading} />
         </ScrollReveal>
 
         {/* 11. Informations pratiques (Address, Phone & Contact Form) */}
         <ScrollReveal duration={0.7}>
-          <PracticalInfo data={data.practicalInfo} onOpenBooking={() => handleOpenBooking('90-min')} />
+          <Contact data={data.practicalInfo} onOpenBooking={() => handleOpenBooking('90-min')} />
         </ScrollReveal>
 
         {/* 12. Offrez à votre corps le soin qu'il mérite (Final CTA) */}
         <ScrollReveal duration={0.8}>
-          <FinalCTA onOpenBooking={() => handleOpenBooking('90-min')} />
+          <FinalCTA
+            data={data.finalCta}
+            insuranceDisclaimer={data.global.insuranceDisclaimer}
+            onOpenBooking={() => handleOpenBooking('90-min')}
+          />
         </ScrollReveal>
       </main>
 
       {/* Footer */}
       <Footer
         data={data.practicalInfo}
+        global={data.global}
+        footer={data.footer}
         onOpenBooking={() => handleOpenBooking('90-min')}
         onOpenLegal={handleOpenLegal}
       />
 
       {/* Sticky Conversion Bar (Mobile & Desktop) */}
-      <StickyBookingBar onOpenBooking={() => handleOpenBooking('90-min')} />
+      <StickyBookingBar
+        data={data.practicalInfo}
+        global={data.global}
+        header={data.header}
+        onOpenBooking={() => handleOpenBooking('90-min')}
+      />
 
       {/* Cookie Policy Banner */}
       <CookieBanner onOpenLegal={handleOpenLegal} />

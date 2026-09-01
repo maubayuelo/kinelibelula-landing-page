@@ -14,6 +14,34 @@
   h1, h2, h3, h4, .font-serif {
     font-family: var(--font-serif);
   }
+
+  /* Offsets anchor-scroll targets so the sticky header never covers a
+     section's title. The header's real height isn't tied to a clean
+     breakpoint (it varies with announcement-bar text wrapping, which
+     differs by locale) — measured worst case is 130px below the xl nav
+     breakpoint and 114px at/above it, each tier +20px margin. On top of
+     that: every section is wrapped in <ScrollReveal>, a motion.div that
+     starts translateY(distance) [default 30px] and animates to 0
+     whileInView — the browser's native anchor-scroll lands based on the
+     pre-animation position, so that reveal shift eats straight into the
+     margin once it settles (confirmed via frame trace: 130px target
+     resolved to 100px after the animation finished). +30px compensates
+     for ScrollReveal's default distance so the settled position still
+     clears the header. StickyBookingBar is fixed to the bottom, so it
+     doesn't need a scroll-margin-top offset. */
+
+     /* +30px compensa el translateY inicial de ScrollReveal
+   (src/components/ScrollReveal.tsx, prop `distance`, default 30).
+   Si ese default cambia, este valor debe cambiar con él. */
+  section[id] {
+    scroll-margin-top: 180px;
+  }
+
+  @media (min-width: 1280px) {
+    section[id] {
+      scroll-margin-top: 160px;
+    }
+  }
 }
 
 .bg-warm-sand {

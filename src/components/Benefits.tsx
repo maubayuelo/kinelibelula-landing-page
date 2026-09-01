@@ -1,13 +1,16 @@
 import React from 'react';
 import { Moon, HeartPulse, Sparkles, ArrowRight } from 'lucide-react';
 import type { LandingData } from '../adapters/normalizeLandingPage';
+import { HighlightedTitle } from './HighlightedTitle';
 
 interface BenefitsProps {
   data: LandingData['benefits'];
+  heading: LandingData['benefitsHeading'];
+  global: LandingData['global'];
   onOpenBooking: () => void;
 }
 
-export const Benefits: React.FC<BenefitsProps> = ({ data, onOpenBooking }) => {
+export const Benefits: React.FC<BenefitsProps> = ({ data, heading, global, onOpenBooking }) => {
   const getIcon = (name: string) => {
     switch (name) {
       case 'Moon':
@@ -28,16 +31,15 @@ export const Benefits: React.FC<BenefitsProps> = ({ data, onOpenBooking }) => {
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E1D8] text-[#5A5A40] text-xs font-bold uppercase tracking-widest rounded-full">
             <Sparkles className="w-3.5 h-3.5 text-[#C85A28]" />
-            <span>Les bienfaits concrets</span>
+            <span>{heading.eyebrow}</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight">
-            Pourquoi choisir la{' '}
-            <span className="text-[#C85A28] italic font-serif">
-              massothérapie ?
-            </span>
-          </h2>
+          <HighlightedTitle
+            className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight"
+            title={heading.title}
+            highlight={heading.titleHighlight}
+          />
           <p className="text-sm sm:text-base text-[#3E433F]">
-            Une approche holistique reconnue pour ses bienfaits
+            {heading.subtitle}
           </p>
         </div>
 
@@ -71,7 +73,7 @@ export const Benefits: React.FC<BenefitsProps> = ({ data, onOpenBooking }) => {
             className="px-8 py-3.5 bg-[#C85A28] text-white font-bold text-xs uppercase tracking-wider rounded-full hover:bg-[#2D312E] transition-all shadow-md hover:shadow-lg inline-flex items-center gap-2 group"
             id="benefits-cta-btn"
           >
-            <span>Prendre rendez-vous</span>
+            <span>{global.ctaLabel}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>

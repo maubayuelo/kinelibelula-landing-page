@@ -159,6 +159,7 @@ export const GET_LANDING_PAGE = gql`
           ...MediaFields
         }
         aboutImageCaption
+        aboutImageCaptionAttribution
         aboutStats {
           aboutStatIcon
           aboutStatValue
@@ -186,8 +187,8 @@ export const GET_LANDING_PAGE = gql`
         testimonialsTitle
         testimonialsTitleHighlight
         testimonialsSubtitle
-        testimonialsRatingValue
         testimonialsSocialProof
+        testimonialsDisclaimer
         testimonialsList {
           testimonialCategory
           testimonialQuote
@@ -232,6 +233,7 @@ export const GET_LANDING_PAGE = gql`
           ...MediaFields
         }
         pregnancyBadgeNote
+        pregnancyMedicalNote
       }
 
       landingFaq {
@@ -243,6 +245,25 @@ export const GET_LANDING_PAGE = gql`
           faqQuestion
           faqAnswer
         }
+      }
+
+      landingContact {
+        contactEyebrow
+        contactTitle
+        contactTitleHighlight
+        contactSubtitle
+        contactAddressHeading
+        contactDirectHeading
+        contactDirectSubheading
+        contactDirectNote
+        contactCtaPrimaryLabel
+        contactCtaSecondaryLabel
+        contactCtaEmailLabel
+        contactHoursHeading
+        contactHoursNote
+        contactHoursMonThuLabel
+        contactHoursFriLabel
+        contactHoursWeekendLabel
       }
 
       landingFinalCta {

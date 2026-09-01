@@ -108,6 +108,11 @@ async function fetchLandingPageInner(locale: SupportedLocale): Promise<WpLanding
     return null;
   }
 
+  console.log('[FETCH]', locale, databaseId, {
+    announcementText: result.data.page?.landingGlobal?.globalAnnouncementText,
+    headerNavFirst: result.data.page?.landingHeader?.headerNavItems?.[0]?.headerNavLabel ?? null,
+    footerNavFirst: result.data.page?.landingFooter?.footerNavItems?.[0]?.footerNavLabel ?? null,
+  });
   return result.data.page;
 }
 

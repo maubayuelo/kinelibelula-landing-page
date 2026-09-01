@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { ChevronDown, HelpCircle, Sparkles } from 'lucide-react';
 import type { LandingData } from '../adapters/normalizeLandingPage';
+import { HighlightedTitle } from './HighlightedTitle';
 
 interface FAQProps {
   data: LandingData['faq'];
+  heading: LandingData['faqHeading'];
 }
 
-export const FAQ: React.FC<FAQProps> = ({ data }) => {
+export const FAQ: React.FC<FAQProps> = ({ data, heading }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleAccordion = (index: number) => {
@@ -14,23 +16,22 @@ export const FAQ: React.FC<FAQProps> = ({ data }) => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-[#F2F4F0] border-y border-[#E5E1D8]">
+    <section id="faq" className="py-16 md:py-24 bg-[#F2F4F0] border-y border-[#E5E1D8]">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E1D8] text-[#5A5A40] text-xs font-bold uppercase tracking-widest rounded-full">
             <HelpCircle className="w-3.5 h-3.5 text-[#C85A28]" />
-            <span>Réponses à vos questions</span>
+            <span>{heading.eyebrow}</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight">
-            Questions{' '}
-            <span className="text-[#C85A28] italic font-serif">
-              fréquentes
-            </span>
-          </h2>
+          <HighlightedTitle
+            className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight"
+            title={heading.title}
+            highlight={heading.titleHighlight}
+          />
           <p className="text-sm sm:text-base text-[#5E645D]">
-            Tout ce que vous devez savoir avant de réserver votre soin
+            {heading.subtitle}
           </p>
         </div>
 

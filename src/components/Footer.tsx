@@ -3,11 +3,13 @@ import { ChevronUp, Phone, MapPin, ArrowRight, ShieldCheck } from 'lucide-react'
 import type { LandingData } from '../adapters/normalizeLandingPage';
 interface FooterProps {
   data: LandingData['practicalInfo'];
+  global: LandingData['global'];
+  footer: LandingData['footer'];
   onOpenBooking: () => void;
   onOpenLegal: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ data, onOpenBooking, onOpenLegal }) => {
+export const Footer: React.FC<FooterProps> = ({ data, global, footer, onOpenBooking, onOpenLegal }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -26,7 +28,7 @@ export const Footer: React.FC<FooterProps> = ({ data, onOpenBooking, onOpenLegal
               Jitany Jara — Massothérapeute Agréée
             </p>
             <p className="text-xs text-[#A6AEA4] max-w-sm pt-2 leading-relaxed">
-              25 ans d'expérience à Montréal en massothérapie thérapeutique, relaxation profonde et accompagnement prénatal personnalisé.
+              {footer.bioText}
             </p>
             <div className="pt-2 space-y-1">
               <div className="flex items-center gap-2 text-[11px] text-[#A6AEA4]">
@@ -34,7 +36,7 @@ export const Footer: React.FC<FooterProps> = ({ data, onOpenBooking, onOpenLegal
                 <span>Reçus d'assurance massothérapie</span>
               </div>
               <p className="text-[10px] text-[#A6AEA4]/80">
-                Reçus valides selon votre couverture — vérifiez auprès de votre assureur.
+                {global.insuranceDisclaimer}
               </p>
             </div>
           </div>
@@ -42,21 +44,21 @@ export const Footer: React.FC<FooterProps> = ({ data, onOpenBooking, onOpenLegal
           {/* Navigation Links */}
           <div className="md:col-span-3 space-y-3 text-left">
             <div className="font-serif font-bold text-sm text-[#F9F8F6] uppercase tracking-wider">
-              Navigation
+              {footer.navHeading}
             </div>
             <ul className="space-y-2 text-xs text-[#A6AEA4]">
-              <li><a href="#services" className="hover:text-white transition-colors">Services & Soins</a></li>
-              <li><a href="#tarifs" className="hover:text-white transition-colors">Tarifs & Formules</a></li>
-              <li><a href="#grossesse" className="hover:text-white transition-colors">Soin Prénatal</a></li>
-              <li><a href="#a-propos" className="hover:text-white transition-colors">À propos de Jitany</a></li>
-              <li><a href="#contact" className="hover:text-white transition-colors">Informations pratiques</a></li>
+              {footer.navItems.map((item) => (
+                <li key={item.anchor}>
+                  <a href={item.anchor} className="hover:text-white transition-colors">{item.label}</a>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Contact & CTA */}
           <div className="md:col-span-4 space-y-4 text-left">
             <div className="font-serif font-bold text-sm text-[#F9F8F6] uppercase tracking-wider">
-              Coordonnées
+              {footer.contactHeading}
             </div>
             <div className="space-y-2.5 text-xs text-[#A6AEA4]">
               <p className="flex items-center gap-2.5">
@@ -75,7 +77,7 @@ export const Footer: React.FC<FooterProps> = ({ data, onOpenBooking, onOpenLegal
                 className="px-6 py-2.5 bg-[#C85A28] text-white text-xs font-bold uppercase tracking-wider rounded-full hover:bg-white hover:text-[#2D312E] transition-all flex items-center gap-2 group"
                 id="footer-book-btn"
               >
-                <span>Demander un rendez-vous</span>
+                <span>{global.ctaLabel}</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -86,15 +88,15 @@ export const Footer: React.FC<FooterProps> = ({ data, onOpenBooking, onOpenLegal
         {/* Bottom Legal Links & Copyright & Back to top */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-[#A6AEA4] gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 text-center sm:text-left">
-            <p>© {new Date().getFullYear()} KinéLibelula — Jitany Jara. Tous droits réservés.</p>
-            
+            <p>© {new Date().getFullYear()} {footer.copyright}</p>
+
             <div className="flex items-center gap-3 sm:gap-4 text-[11px]">
               <button
                 onClick={onOpenLegal}
                 className="hover:text-white underline transition-colors"
                 id="footer-legal-btn"
               >
-                Mentions légales & Confidentialité
+                {footer.legalLabel}
               </button>
             </div>
           </div>

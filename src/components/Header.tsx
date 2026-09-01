@@ -5,6 +5,8 @@ import type { SupportedLocale } from '../services/queries';
 
 interface HeaderProps {
   data: LandingData['practicalInfo'];
+  global: LandingData['global'];
+  header: LandingData['header'];
   locale: SupportedLocale;
   onLocaleChange: (locale: SupportedLocale) => void;
   onOpenBooking: () => void;
@@ -15,7 +17,7 @@ type DisplayLang = 'FR' | 'EN' | 'ES';
 const LOCALE_TO_DISPLAY: Record<SupportedLocale, DisplayLang> = { fr: 'FR', en: 'EN', es: 'ES' };
 const DISPLAY_TO_LOCALE: Record<DisplayLang, SupportedLocale> = { FR: 'fr', EN: 'en', ES: 'es' };
 
-export const Header: React.FC<HeaderProps> = ({ data, locale, onLocaleChange, onOpenBooking }) => {
+export const Header: React.FC<HeaderProps> = ({ data, global, header, locale, onLocaleChange, onOpenBooking }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const currentLang = LOCALE_TO_DISPLAY[locale];
 
@@ -37,7 +39,7 @@ export const Header: React.FC<HeaderProps> = ({ data, locale, onLocaleChange, on
           <div className="flex items-center gap-2 mx-auto sm:mx-0">
             <span className="w-2 h-2 rounded-full bg-[#C85A28] animate-pulse"></span>
             <span className="tracking-wide text-center sm:text-left">
-              Massothérapie professionnelle à Montréal — <span className="text-[#E5E1D8] font-semibold">Reçus d'assurance fournis</span>
+              {global.announcementText}
             </span>
           </div>
 
@@ -61,22 +63,26 @@ export const Header: React.FC<HeaderProps> = ({ data, locale, onLocaleChange, on
       {/* Main Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo */}
-        <a href="#" className="flex flex-col group shrink-0" id="header-logo-link">
+        <a href="#top" className="flex flex-col group shrink-0" id="header-logo-link">
           <span className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#2D312E] group-hover:text-[#C85A28] transition-colors">
-            KinéLibelula
+            {header.businessName}
           </span>
-          <span className="text-[10px] sm:text-[11px] text-[#5A5A40] font-sans tracking-widest uppercase font-semibold">
-            Jitany Jara • Massothérapie Montréal
+          <span className="hidden sm:block text-[10px] sm:text-[11px] text-[#5A5A40] font-sans tracking-widest uppercase font-semibold">
+            {header.tagline}
           </span>
         </a>
 
         {/* Desktop Navigation Links (Visible on Wide Desktop ≥ 1280px) */}
         <nav className="hidden xl:flex items-center space-x-7 text-sm font-medium text-[#2D312E]">
-          <a href="#services" className="hover:text-[#C85A28] transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#C85A28] hover:after:w-full after:transition-all">Services</a>
-          <a href="#tarifs" className="hover:text-[#C85A28] transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#C85A28] hover:after:w-full after:transition-all">Tarifs</a>
-          <a href="#grossesse" className="hover:text-[#C85A28] transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#C85A28] hover:after:w-full after:transition-all">Grossesse</a>
-          <a href="#a-propos" className="hover:text-[#C85A28] transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#C85A28] hover:after:w-full after:transition-all">À propos</a>
-          <a href="#contact" className="hover:text-[#C85A28] transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#C85A28] hover:after:w-full after:transition-all">Contact</a>
+          {header.navItems.map((item) => (
+            <a
+              key={item.anchor}
+              href={item.anchor}
+              className="hover:text-[#C85A28] transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#C85A28] hover:after:w-full after:transition-all"
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
 
         {/* Desktop Right Actions (Visible on Wide Desktop ≥ 1280px) */}
@@ -119,7 +125,7 @@ export const Header: React.FC<HeaderProps> = ({ data, locale, onLocaleChange, on
             className="px-5 py-2.5 cta-gradient-hover text-white text-xs font-bold uppercase tracking-wider rounded-full transition-all shadow-sm hover:shadow-md flex items-center gap-2 group whitespace-nowrap"
             id="header-book-btn"
           >
-            <span>Prendre rendez-vous</span>
+            <span>{global.ctaLabel}</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
@@ -149,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({ data, locale, onLocaleChange, on
           {/* Quick Call Button on Tablet */}
           <a
             href={`tel:${data.phone}`}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#F2F4F0] hover:bg-white border border-[#E5E1D8] text-[#2D312E] text-xs font-semibold rounded-full transition-all whitespace-nowrap"
+            className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#F2F4F0] hover:bg-white border border-[#E5E1D8] text-[#2D312E] text-xs font-semibold rounded-full transition-all whitespace-nowrap"
             title="Appeler le cabinet"
           >
             <Phone className="w-3.5 h-3.5 text-[#C85A28]" />
@@ -160,10 +166,10 @@ export const Header: React.FC<HeaderProps> = ({ data, locale, onLocaleChange, on
           {/* Quick Request Button on Tablet */}
           <a
             href="#contact"
-            className="hidden sm:inline-flex px-3.5 py-1.5 cta-gradient-hover text-white text-xs font-semibold rounded-full shadow-2xs"
+            className="hidden lg:inline-flex px-3.5 py-1.5 cta-gradient-hover text-white text-xs font-semibold rounded-full shadow-2xs"
             id="tablet-quick-booking"
           >
-            Prendre rendez-vous
+            {global.ctaLabel}
           </a>
 
           {/* Hamburger Menu Button */}
@@ -183,41 +189,18 @@ export const Header: React.FC<HeaderProps> = ({ data, locale, onLocaleChange, on
         <div className="xl:hidden bg-[#F9F8F6] border-b border-[#E5E1D8] px-6 py-6 space-y-5 animate-fadeIn shadow-xl">
           {/* Navigation Links */}
           <nav className="flex flex-col space-y-3 font-serif text-lg text-[#2D312E]">
-            <a 
-              href="#services" 
-              onClick={handleNavClick} 
-              className="py-1.5 hover:text-[#C85A28] border-b border-[#E5E1D8]/50 transition-colors"
-            >
-              Services & Techniques
-            </a>
-            <a 
-              href="#tarifs" 
-              onClick={handleNavClick} 
-              className="py-1.5 hover:text-[#C85A28] border-b border-[#E5E1D8]/50 transition-colors"
-            >
-              Tarifs & Formules
-            </a>
-            <a 
-              href="#grossesse" 
-              onClick={handleNavClick} 
-              className="py-1.5 hover:text-[#C85A28] border-b border-[#E5E1D8]/50 transition-colors"
-            >
-              Massage Prénatal (Grossesse)
-            </a>
-            <a 
-              href="#a-propos" 
-              onClick={handleNavClick} 
-              className="py-1.5 hover:text-[#C85A28] border-b border-[#E5E1D8]/50 transition-colors"
-            >
-              À propos de Jitany
-            </a>
-            <a 
-              href="#contact" 
-              onClick={handleNavClick} 
-              className="py-1.5 hover:text-[#C85A28] transition-colors"
-            >
-              Contact & Accès
-            </a>
+            {header.navItems.map((item, idx) => (
+              <a
+                key={item.anchor}
+                href={item.anchor}
+                onClick={handleNavClick}
+                className={`py-1.5 hover:text-[#C85A28] transition-colors ${
+                  idx < header.navItems.length - 1 ? 'border-b border-[#E5E1D8]/50' : ''
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
 
           {/* Action CTAs inside Drawer */}
@@ -234,7 +217,7 @@ export const Header: React.FC<HeaderProps> = ({ data, locale, onLocaleChange, on
               onClick={() => setMobileMenuOpen(false)}
               className="flex-1 py-3 px-6 cta-gradient-hover text-white font-bold rounded-full text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all text-center"
             >
-              Prendre rendez-vous
+              {global.ctaLabel}
             </a>
           </div>
         </div>

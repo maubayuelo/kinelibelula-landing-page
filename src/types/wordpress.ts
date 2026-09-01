@@ -168,6 +168,7 @@ export interface LandingAbout {
   aboutQuote: string | null;
   aboutImage: WpMediaEdge | null;
   aboutImageCaption: string | null;
+  aboutImageCaptionAttribution: string | null;
   aboutStats: LandingAboutStat[] | null;
   aboutCtaLabel: string | null;
 }
@@ -203,8 +204,8 @@ export interface LandingTestimonials {
   testimonialsTitle: string | null;
   testimonialsTitleHighlight: string | null;
   testimonialsSubtitle: string | null;
-  testimonialsRatingValue: string | null;
   testimonialsSocialProof: string | null;
+  testimonialsDisclaimer: string | null;
   testimonialsList: LandingTestimonialItem[] | null;
 }
 
@@ -249,6 +250,7 @@ export interface LandingPregnancy {
   pregnancyCtaLabel: string | null;
   pregnancyImage: WpMediaEdge | null;
   pregnancyBadgeNote: string | null;
+  pregnancyMedicalNote: string | null;
 }
 
 // ── landingFaq ───────────────────────────────────────────────────────────────
@@ -263,6 +265,26 @@ export interface LandingFaq {
   faqTitleHighlight: string | null;
   faqSubtitle: string | null;
   faqItems: LandingFaqItem[] | null;
+}
+
+// ── landingContact ───────────────────────────────────────────────────────────
+export interface LandingContact {
+  contactEyebrow: string | null;
+  contactTitle: string | null;
+  contactTitleHighlight: string | null;
+  contactSubtitle: string | null;
+  contactAddressHeading: string | null;
+  contactDirectHeading: string | null;
+  contactDirectSubheading: string | null;
+  contactDirectNote: string | null;
+  contactCtaPrimaryLabel: string | null;
+  contactCtaSecondaryLabel: string | null;
+  contactCtaEmailLabel: string | null;
+  contactHoursHeading: string | null;
+  contactHoursNote: string | null;
+  contactHoursMonThuLabel: string | null;
+  contactHoursFriLabel: string | null;
+  contactHoursWeekendLabel: string | null;
 }
 
 // ── landingFinalCta ──────────────────────────────────────────────────────────
@@ -297,6 +319,10 @@ export interface WpLandingPage {
   id: string;
   title: string;
   slug: string;
+  // Queried (see queries.ts) but was never declared here — used to
+  // locale-select the practicalInfo.hours day labels, which have no ACF
+  // field of their own.
+  language: { code: string } | null;
   landingGlobal: LandingGlobal | null;
   landingHeader: LandingHeader | null;
   landingHero: LandingHero | null;
@@ -310,6 +336,7 @@ export interface WpLandingPage {
   landingPricing: LandingPricing | null;
   landingPregnancy: LandingPregnancy | null;
   landingFaq: LandingFaq | null;
+  landingContact: LandingContact | null;
   landingFinalCta: LandingFinalCta | null;
   landingFooter: LandingFooter | null;
 }

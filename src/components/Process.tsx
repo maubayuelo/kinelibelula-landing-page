@@ -1,12 +1,15 @@
 import React from 'react';
 import { Calendar, PhoneCall, Sparkles } from 'lucide-react';
 import type { LandingData } from '../adapters/normalizeLandingPage';
+import { HighlightedTitle } from './HighlightedTitle';
 
 interface ProcessProps {
   data: LandingData['processSteps'];
+  heading: LandingData['processHeading'];
+  stepLabel: LandingData['uiLabels']['stepLabel'];
 }
 
-export const Process: React.FC<ProcessProps> = ({ data }) => {
+export const Process: React.FC<ProcessProps> = ({ data, heading, stepLabel }) => {
   const getStepIcon = (step: string) => {
     switch (step) {
       case "1":
@@ -28,16 +31,15 @@ export const Process: React.FC<ProcessProps> = ({ data }) => {
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E1D8] text-[#5A5A40] text-xs font-bold uppercase tracking-widest rounded-full">
             <Sparkles className="w-3.5 h-3.5 text-[#C85A28]" />
-            <span>Simplicité & sérénité</span>
+            <span>{heading.eyebrow}</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight">
-            Comment ça{' '}
-            <span className="text-[#C85A28] italic font-serif">
-              se passe ?
-            </span>
-          </h2>
+          <HighlightedTitle
+            className="font-serif text-3xl sm:text-4xl font-normal text-[#2D312E] tracking-tight"
+            title={heading.title}
+            highlight={heading.titleHighlight}
+          />
           <p className="text-sm sm:text-base text-[#3E433F]">
-            Un parcours simple et transparent en 3 étapes vers votre bien-être
+            {heading.subtitle}
           </p>
         </div>
 
@@ -57,7 +59,7 @@ export const Process: React.FC<ProcessProps> = ({ data }) => {
                   </div>
 
                   <span className="text-xs font-bold uppercase tracking-widest text-[#5A5A40] bg-[#F2F4F0] px-3.5 py-1.5 rounded-full border border-[#E5E1D8] group-hover:border-[#C85A28]/40 group-hover:text-[#C85A28] transition-colors">
-                    Étape {step.stepNumber}
+                    {stepLabel} {step.stepNumber}
                   </span>
                 </div>
 
@@ -73,11 +75,7 @@ export const Process: React.FC<ProcessProps> = ({ data }) => {
               {/* Subtle bottom indicator */}
               <div className="mt-8 pt-4 border-t border-[#F2F4F0] flex items-center gap-2 text-xs font-semibold text-[#5A5A40]">
                 <div className="w-2 h-2 rounded-full bg-[#C85A28]"></div>
-                <span>
-                  {idx === 0 && 'Échange initial sans engagement'}
-                  {idx === 1 && 'Planification personnalisée'}
-                  {idx === 2 && 'Reçu d’assurance sur place'}
-                </span>
+                <span>{step.note}</span>
               </div>
             </div>
           ))}
